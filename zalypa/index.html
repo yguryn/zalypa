@@ -3,39 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>ZALYPA</title>
-    <script>
-        // Function to set visitorId in the last <h3> element
-        function setVisitorId(visitorId) {
-            const lastH3 = document.querySelector('h3#visitorId'); // Improved selector
-            if (lastH3) { // Check if the element exists
-                lastH3.textContent = `Visitor ID: ${visitorId}`;
-            } else {
-                console.error("Element with id 'visitorId' not found.");
-            }
-        }
-
-        // Initialize the agent on page load.
-        const fpPromise = import('https://fpjscdn.net/v3/Ose0J72g9W54Sjk1F21L')
-            .then(FingerprintJS => FingerprintJS.load({
-                region: "eu"
-            }));
-
-        // Get the visitorId when you need it.
-        fpPromise
-            .then(fp => fp.get())
-            .then(result => {
-                const visitorId = result.visitorId;
-                console.log(`Visitor ID: ${visitorId}`); // Log the visitorId for debugging
-                setVisitorId(visitorId); // Set the visitorId in the last <h3> element
-            })
-            .catch(error => {
-                console.error("Error:", error); // Log any errors
-            });
-    </script>
 </head>
 <body>
 <h1>This is a Zalypa 1</h1>
 <h2>This is a Zalypa 2</h2>
-<h3 id="visitorId"></h3>
+<h1 id="userIp">UserIp here</h1>
+<h1 id="devModel">DEV MODEL</h1>
+<h1>SCREEN SIZE AND DENSITY</h1>
+<p id="screenSize">Screen Size: </p>
+<p id="screenDensity">Screen Density: </p>
+<script src="userIp.js"></script>
+<script src="devModel.js"></script>
+<script>
+    document.getElementById('screenSize').innerHTML += window.innerWidth + " x " + window.innerHeight;
+    document.getElementById('screenDensity').innerHTML += window.devicePixelRatio;
+</script>
 </body>
 </html>
