@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ZALYPA</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 </head>
 <body>
 <h1>This is a Zalypa 1</h1>
@@ -10,13 +11,36 @@
 <h1 id="userIp">UserIp here</h1>
 <h1 id="devModel">DEV MODEL</h1>
 <h1>SCREEN SIZE AND DENSITY</h1>
+<h1 id="dataUrl">dataUrl</h1>
 <p id="screenSize">Screen Size: </p>
 <p id="screenDensity">Screen Density: </p>
+<canvas id="canvas" width="200" height="60"></canvas>
+
 <script src="userIp.js"></script>
 <script src="devModel.js"></script>
 <script>
+    // Screen size and density
     document.getElementById('screenSize').innerHTML += window.innerWidth + " x " + window.innerHeight;
     document.getElementById('screenDensity').innerHTML += window.devicePixelRatio;
+
+    // Canvas fingerprinting
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    ctx.textBaseline = "top";
+    ctx.font = "14px 'Arial'";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillStyle = "#f60";
+    ctx.fillRect(125, 1, 62, 20);
+    ctx.fillStyle = "#069";
+    var txt = "BrowserLeaks,com <canvas> 1.0";
+    ctx.fillText(txt, 2, 15);
+    ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+    ctx.fillText(txt, 4, 17);
+    // Extract and use the canvas data as needed
+    var dataURL = canvas.toDataURL();
+    var md5Hash = CryptoJS.MD5(dataURL).toString();
+    document.getElementById('dataUrl').textContent = md5Hash;
+    // You can hash dataURL to get the fingerprint
 </script>
 </body>
 </html>
